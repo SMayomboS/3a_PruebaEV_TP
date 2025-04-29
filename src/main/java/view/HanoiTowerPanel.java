@@ -38,6 +38,8 @@ public class HanoiTowerPanel extends GamePanel {
                 JOptionPane.INFORMATION_MESSAGE);
 
         facade.guardarResultado(numDiscos, true);
+        revalidate();
+        repaint();
     }
 
     private int solicitarNumeroDiscos() {
@@ -45,8 +47,8 @@ public class HanoiTowerPanel extends GamePanel {
             String input = JOptionPane.showInputDialog(this, "Ingrese el número de discos:", "Torres de Hanoi", JOptionPane.PLAIN_MESSAGE);
             if (input == null) return -1;
             int n = Integer.parseInt(input);
-            if (n < 1 || n > 8) {
-                JOptionPane.showMessageDialog(this, "Ingrese un número entre 1 y 8.");
+            if (n < 1 || n > 10) {
+                JOptionPane.showMessageDialog(this, "Ingrese un número entre 1 y 10.");
                 return solicitarNumeroDiscos();
             }
             return n;

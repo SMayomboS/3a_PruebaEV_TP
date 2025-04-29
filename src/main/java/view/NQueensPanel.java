@@ -17,6 +17,10 @@ public class NQueensPanel extends GamePanel {
         if (input != null) {
             try {
                 n = Integer.parseInt(input);
+                if (n < 1 || n > 20) {
+                    JOptionPane.showMessageDialog(this, "Por favor ingrese un número entre 1 y 20.");
+                    return;
+                }
                 board = new int[n][n];
                 boolean solucion = facade.resolver(board, n);
                 repaint();
@@ -39,11 +43,7 @@ public class NQueensPanel extends GamePanel {
             int size = Math.min(getWidth(), getHeight()) / n;
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
-                    if ((i + j) % 2 == 0) {
-                        g.setColor(Color.WHITE);
-                    } else {
-                        g.setColor(Color.GRAY);
-                    }
+                    g.setColor((i + j) % 2 == 0 ? Color.WHITE : Color.GRAY);
                     g.fillRect(j * size, i * size, size, size);
                     if (board[i][j] == 1) {
                         g.setColor(Color.RED);

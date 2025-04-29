@@ -8,7 +8,7 @@
 
         <!-- Configuración de conexión a H2 embebida -->
         <property name="hibernate.connection.driver_class">org.h2.Driver</property>
-        <property name="hibernate.connection.url">jdbc:h2:./arcade_db;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE</property>
+        <property name="hibernate.connection.url">jdbc:h2:./arcade_db;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE</property>
         <property name="hibernate.connection.username">sa</property>
         <property name="hibernate.connection.password"></property>
 

@@ -17,6 +17,10 @@ public class KnightTourPanel extends GamePanel {
         if (input != null) {
             try {
                 n = Integer.parseInt(input);
+                if (n < 1 || n > 20) {
+                    JOptionPane.showMessageDialog(this, "Por favor ingrese un número entre 1 y 20.");
+                    return;
+                }
                 board = new int[n][n];
                 boolean completo = facade.resolver(board, n);
                 repaint();
