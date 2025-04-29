@@ -22,19 +22,27 @@ public class KnightTourPanel extends GamePanel {
                     return;
                 }
                 board = new int[n][n];
+
+                for (int[] fila : board)
+                    java.util.Arrays.fill(fila, -1);
+
+                board[0][0] = 0;  // primer movimiento
                 boolean completo = facade.resolver(board, n);
                 repaint();
+
                 if (completo) {
                     JOptionPane.showMessageDialog(this, "¡Recorrido completado!");
                 } else {
                     JOptionPane.showMessageDialog(this, "No se pudo completar el recorrido.");
                 }
+
                 facade.guardarResultado(n, completo);
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "Entrada inválida.");
             }
         }
     }
+
 
     @Override
     protected void paintComponent(Graphics g) {
