@@ -13,12 +13,12 @@ public class KnightTourPanel extends GamePanel {
 
     @Override
     public void iniciarJuego() {
-        String input = JOptionPane.showInputDialog(this, "Ingrese el tamaño del tablero (N):", "8");
+        String input = JOptionPane.showInputDialog(this, "Ingrese el tamaño del tablero (0-8):", "8");
         if (input != null) {
             try {
                 n = Integer.parseInt(input);
-                if (n < 1 || n > 20) {
-                    JOptionPane.showMessageDialog(this, "Por favor ingrese un número entre 1 y 20.");
+                if (n < 0 || n > 8) {
+                    JOptionPane.showMessageDialog(this, "Por favor ingrese un número entre 0 y 8.");
                     return;
                 }
                 board = new int[n][n];
