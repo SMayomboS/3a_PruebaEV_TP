@@ -1,13 +1,15 @@
 package view;
 
+import controller.KnightTourFacade;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class KnightTourPanel extends GamePanel{
+public class KnightTourPanel extends GamePanel {
+
     private int n = 8;
     private int[][] board;
-    private final int [] moveX = {2, 1, -1, -2, -2, -1, 1, 2};
-    private final int [] moveY = {1, 2, 2, 1, -1, -2, -2, -1};
+    private final KnightTourFacade facade = new KnightTourFacade();
 
     @Override
     public void iniciarJuego() {
@@ -16,41 +18,18 @@ public class KnightTourPanel extends GamePanel{
             try {
                 n = Integer.parseInt(input);
                 board = new int[n][n];
-                for (int[] row : board)
-                    java.util.Arrays.fill(row, -1);
-
-                board[0][0] = 0;
-                if (solveKnightTour(0, 0, 1)) {
-                    repaint();
+                boolean completo = facade.resolver(board, n);
+                repaint();
+                if (completo) {
                     JOptionPane.showMessageDialog(this, "¡Recorrido completado!");
                 } else {
                     JOptionPane.showMessageDialog(this, "No se pudo completar el recorrido.");
                 }
+                facade.guardarResultado(n, completo);
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "Entrada inválida.");
             }
         }
-    }
-
-    private boolean solveKnightTour(int x, int y, int moveCount){
-        if (moveCount == n * n) {
-            return true;
-        }
-
-        for (int i = 0; i < 8; i++) {
-            int nextX = x + moveX[i];
-            int nextY = y + moveY[i];
-            if (isValid(nextX, nextY)) {
-                board[nextX][nextY] = moveCount;
-                if (solveKnightTour(nextX, nextY, moveCount+1)) return true;
-                board[nextX][nextY] = -1; // backtrack
-            }
-        }
-        return false;
-    }
-
-    private boolean isValid(int x, int y) {
-        return (x >= 0 && x < n && y >= 0 && y < n && board[x][y] == -1);
     }
 
     @Override

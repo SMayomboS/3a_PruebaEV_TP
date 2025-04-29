@@ -1,51 +1,35 @@
 package view;
 
+import controller.NQueensFacade;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class NQueensPanel extends GamePanel {
+
     private int n = 8;
     private int[][] board;
+    private final NQueensFacade facade = new NQueensFacade();
 
     @Override
-    public void iniciarJuego(){
-        String input = JOptionPane.showInputDialog("Ingrese el tamaño del tablero (n):");
+    public void iniciarJuego() {
+        String input = JOptionPane.showInputDialog(this, "Ingrese el tamaño del tablero (N):", "8");
         if (input != null) {
             try {
                 n = Integer.parseInt(input);
-                board = new int [n][n];
-                if (solveNQueens(0)){
-                    repaint();
-                    JOptionPane.showMessageDialog(this, "Solución encontrada!");
+                board = new int[n][n];
+                boolean solucion = facade.resolver(board, n);
+                repaint();
+                if (solucion) {
+                    JOptionPane.showMessageDialog(this, "¡Solución encontrada!");
                 } else {
-                    JOptionPane.showMessageDialog(this, "No hay solución para n = " + n);
+                    JOptionPane.showMessageDialog(this, "No existe solución.");
                 }
+                facade.guardarResultado(n, solucion);
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "Entrada inválida.");
             }
         }
-    }
-
-    private boolean solveNQueens(int col) {
-        if (col >= n) return true;
-        for (int i = 0; i < n; i++) {
-            if (isSafe(i, col)) {
-                board[i][col] = 1;
-                if (solveNQueens(col + 1)) return true;
-                board[i][col] = 0; // backtrack
-            }
-        }
-        return false;
-    }
-
-    private boolean isSafe(int row, int col){
-        for (int i = 0; i < col; i++)
-            if (board[row][i] == 1) return false;
-        for (int i = row, j = col; i >= 0 && j >= 0; i--, j--)
-            if (board[i][j] == 1) return false;
-        for (int i = row, j = col; j >= 0 && i < n; i++, j--)
-            if (board[i][j] == 1) return false;
-        return true;
     }
 
     @Override
@@ -56,9 +40,9 @@ public class NQueensPanel extends GamePanel {
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
                     if ((i + j) % 2 == 0) {
-                        g.setColor(Color.LIGHT_GRAY);
+                        g.setColor(Color.WHITE);
                     } else {
-                        g.setColor(Color.DARK_GRAY);
+                        g.setColor(Color.GRAY);
                     }
                     g.fillRect(j * size, i * size, size, size);
                     if (board[i][j] == 1) {
@@ -68,6 +52,5 @@ public class NQueensPanel extends GamePanel {
                 }
             }
         }
-
     }
 }
